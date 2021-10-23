@@ -1,0 +1,34 @@
+{
+	"name": "forgie1/fulfillment-by-authentica",
+	"description": "Fulfillment by Authentica API wrapper",
+	"homepage": "http://www.artweby.cz",
+	"type": "project",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ján Forgáč",
+			"email": "forgac@artfocus.cz"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/forgie1/fulfillment-by-authentica"
+		}
+	],
+	"require": {
+		"php": ">=8.0",
+		"guzzlehttp/guzzle": "^6.1|^7.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.0",
+		"artfocus/codestyle": "dev-github as 6.0.0",
+		"phpstan/phpstan": "0.12.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"FulfillmentByAuthentica\\": "src/",
+			"Tests\\": "tests/"
+		}
+	}
+}
