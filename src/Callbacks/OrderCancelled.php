@@ -5,7 +5,7 @@
  * Copyright © 2021 Ján Forgáč <forgac@artfocus.cz>
  */
 
-namespace FulfillmentByAuthentica\Callbacks;
+namespace MyStockWmsApiWrapper\Callbacks;
 
 /**
  * Callbeck object that Order was Cancelled

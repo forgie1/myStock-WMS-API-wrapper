@@ -5,7 +5,7 @@
  * Copyright © 2021 Ján Forgáč <forgac@artfocus.cz>
  */
 
-namespace FulfillmentByAuthentica\Responses;
+namespace MyStockWmsApiWrapper\Responses;
 
 class Error
 {

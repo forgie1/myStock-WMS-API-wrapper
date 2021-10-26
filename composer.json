@@ -1,6 +1,6 @@
 {
-	"name": "forgie1/fulfillment-by-authentica",
-	"description": "Fulfillment by Authentica API wrapper",
+	"name": "forgie1/mystock-wms-api-wrapper",
+	"description": "myStock WMS API wrapper",
 	"homepage": "http://www.artweby.cz",
 	"type": "project",
 	"license": "MIT",
@@ -13,7 +13,7 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "https://github.com/forgie1/fulfillment-by-authentica"
+			"url": "https://github.com/forgie1/myStock-WMS-API-wrapper"
 		}
 	],
 	"require": {
@@ -27,7 +27,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"FulfillmentByAuthentica\\": "src/",
+			"MyStockWmsApiWrapper\\": "src/",
 			"Tests\\": "tests/"
 		}
 	}

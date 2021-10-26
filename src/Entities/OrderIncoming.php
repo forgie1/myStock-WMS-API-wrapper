@@ -5,7 +5,7 @@
  * Copyright © 2021 Ján Forgáč <forgac@artfocus.cz>
  */
 
-namespace FulfillmentByAuthentica\Entities;
+namespace MyStockWmsApiWrapper\Entities;
 
 /**
  * Order to be created in Fulfillment

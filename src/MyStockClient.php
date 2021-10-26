@@ -5,19 +5,19 @@
  * Copyright © 2021 Ján Forgáč <forgac@artfocus.cz>
  */
 
-namespace FulfillmentByAuthentica;
+namespace MyStockWmsApiWrapper;
 
-use FulfillmentByAuthentica\Entities\OperatingUnit;
-use FulfillmentByAuthentica\Entities\OrderIncoming;
-use FulfillmentByAuthentica\Entities\Partner;
-use FulfillmentByAuthentica\Entities\Product;
-use FulfillmentByAuthentica\Entities\ProductBarcode;
-use FulfillmentByAuthentica\Responses\Response;
+use MyStockWmsApiWrapper\Entities\OperatingUnit;
+use MyStockWmsApiWrapper\Entities\OrderIncoming;
+use MyStockWmsApiWrapper\Entities\Partner;
+use MyStockWmsApiWrapper\Entities\Product;
+use MyStockWmsApiWrapper\Entities\ProductBarcode;
+use MyStockWmsApiWrapper\Responses\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 
-class Fulfillment
+class MyStockClient
 {
 
 	const TEST_ENDPOINT = 'https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/';

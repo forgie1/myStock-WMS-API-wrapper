@@ -1,8 +1,9 @@
-# Fulfillment API wrapper
+# myStock WMS API wrapper
 
-This wrapper is to simplify communication with Fulfillment by Authentica API:
+This wrapper is to simplify communication with myStock WMS API:
 
-* web: https://ff.authentica.cz/en/home/
 * API: https://mystock.docs.apiary.io/#
+* created by: https://www.kvados.cz/en/products/
 
-
+used By:
+* web: https://ff.authentica.cz/en/home/
