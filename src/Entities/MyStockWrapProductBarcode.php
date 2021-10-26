@@ -7,7 +7,7 @@
 
 namespace MyStockWmsApiWrapper\Entities;
 
-class ProductBarcode
+class MyStockWrapProductBarcode
 {
 
 	/** @var string 1A672B37-B674-4F14-A13F-C82EAF53BF15 (string (1024), required) - Unique identifier of the product - ID will be generated during the creation of product via API */
@@ -57,9 +57,9 @@ class ProductBarcode
 
 	/**
 	 * @param int $default
-	 * @return ProductBarcode
+	 * @return MyStockWrapProductBarcode
 	 */
-	public function setDefault(int $default): ProductBarcode
+	public function setDefault(int $default): MyStockWrapProductBarcode
 	{
 		$this->default = $default;
 		return $this;
@@ -75,9 +75,9 @@ class ProductBarcode
 
 	/**
 	 * @param string|null $measurementUnitCode
-	 * @return ProductBarcode
+	 * @return MyStockWrapProductBarcode
 	 */
-	public function setMeasurementUnitCode(?string $measurementUnitCode): ProductBarcode
+	public function setMeasurementUnitCode(?string $measurementUnitCode): MyStockWrapProductBarcode
 	{
 		$this->measurementUnitCode = $measurementUnitCode;
 		return $this;
@@ -93,9 +93,9 @@ class ProductBarcode
 
 	/**
 	 * @param bool|int $active
-	 * @return ProductBarcode
+	 * @return MyStockWrapProductBarcode
 	 */
-	public function setActive(bool|int $active): ProductBarcode
+	public function setActive(bool|int $active): MyStockWrapProductBarcode
 	{
 		$this->active = $active;
 		return $this;

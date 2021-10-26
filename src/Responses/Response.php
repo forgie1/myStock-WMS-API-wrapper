@@ -10,6 +10,12 @@ namespace MyStockWmsApiWrapper\Responses;
 class Response
 {
 
+	const STATUS_CODE_OK = 200;
+	const STATUS_CODE_CREATED = 201;
+	const STATUS_CODE_ERROR = 400;
+	const STATUS_CODE_NOT_FOUND = 404;
+	const STATUS_CODE_SERVER_ERROR = 500;
+
 	/** @var int HTTP Status code */
 	private int $code;
 
@@ -17,19 +23,19 @@ class Response
 	private array $ids;
 
 	/** @var Error[]  */
-	private array $errors;
+	private array $errors = [];
 
 	public function __construct(int $statusCode)
 	{
 		$this->code = $statusCode;
 	}
 
-	private function addResponseId(ResponseId $responseId)
+	public function addResponseId(ResponseId $responseId)
 	{
 		$this->ids[] = $responseId;
 	}
 
-	private function addError(Error $error)
+	public function addError(Error $error)
 	{
 		$this->errors[] = $error;
 	}

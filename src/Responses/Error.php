@@ -52,12 +52,14 @@ class Error
 		return $this->errorText;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getErrorType(): int
+	public function getErrorCode(): int
 	{
 		return $this->errorType;
+	}
+
+	public function getErrorCodeAsText(): string
+	{
+		return self::ERROR_TYPES[$this->errorType] ?? 'Unknown error';
 	}
 
 	/**

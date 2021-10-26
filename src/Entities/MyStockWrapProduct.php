@@ -7,7 +7,7 @@
 
 namespace MyStockWmsApiWrapper\Entities;
 
-class Product
+class MyStockWrapProduct
 {
 
 	/** @var string (string (150), required) - Product code - a unique identifier that cannot be changed over time, it is used to identify a product in the WMS. The code is displayed to warehouse operators on mobile devices and is printed in reports. */
@@ -26,37 +26,37 @@ class Product
 	private string $warehouseCode;
 
 	/** @var float|null  10.5 (numeric (17,6)) - Gross weight of the product. */
-	private ?float $weightGross;
+	private ?float $weightGross = null;
 
 	/** @var float|null (numeric (17,6)) - Net weight of the product */
-	private ?float $weightNett;
+	private ?float $weightNett = null;
 
 	/** @var float|null (numeric (8,4)) - Gross height of the product */
-	private ?float $height;
+	private ?float $height = null;
 
 	/** @var float|null (numeric (8,4)) - Gross width of the product */
-	private ?float $width;
+	private ?float $width = null;
 
 	/** @var float|null (numeric (8,4)) - Gross depth of the product */
-	private ?float $depth;
+	private ?float $depth = null;
 
 	/** @var float|null 10.5 (numeric (17,6)) - Gross volume of the product */
-	private ?float $volume;
+	private ?float $volume = null;
 
 	/** @var string|null www.mystock.cz/product.png (string (255)) - URL path to the image of the product. If the URL contains backslash character, the backslash has to be doubled (e.g. a UNC path "\\192.168.55.3\product\377169719.jpg" has to be sent as "\\\\192.168.55.3\\product\\377169719.jpg" - this limitation is based on the JSON characteristics) */
-	private ?string $pictureUrl;
+	private ?string $pictureUrl = null;
 
 	/** @var int|null Mandatory registration of the expiration date. Supported values: 0 - No, 1 - Yes */
-	private ?int $expirationMandatory;
+	private ?int $expirationMandatory = null;
 
 	/** @var int|null Mandatory registration of serial numbers (inbound). Supported values: 0 - No, 1 - Yes */
-	private ?int $inboundMandatory;
+	private ?int $inboundMandatory = null;
 
 	/** @var int|null Mandatory registration of serial numbers (outbound). Supported values: 0 - No, 1 - Yes */
-	private ?int $outboundMandatory;
+	private ?int $outboundMandatory = null;
 
-	/** @var  ProductBarcode[] Optional collection of product's barcodes. See chapter Product barcode for the list of possible attributes of the barcodes */
-	private array $barcodes;
+	/** @var  MyStockWrapProductBarcode[] Optional collection of product's barcodes. See chapter Product barcode for the list of possible attributes of the barcodes */
+	private array $barcodes = [];
 
 	public function __construct(string $productCode, string $name, int $type, string $measurementUnitCode, string $warehouseCode)
 	{
@@ -117,9 +117,9 @@ class Product
 
 	/**
 	 * @param float|null $weightGross
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setWeightGross(?float $weightGross): Product
+	public function setWeightGross(?float $weightGross): MyStockWrapProduct
 	{
 		$this->weightGross = $weightGross;
 		return $this;
@@ -135,9 +135,9 @@ class Product
 
 	/**
 	 * @param float|null $weightNett
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setWeightNett(?float $weightNett): Product
+	public function setWeightNett(?float $weightNett): MyStockWrapProduct
 	{
 		$this->weightNett = $weightNett;
 		return $this;
@@ -153,9 +153,9 @@ class Product
 
 	/**
 	 * @param float|null $height
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setHeight(?float $height): Product
+	public function setHeight(?float $height): MyStockWrapProduct
 	{
 		$this->height = $height;
 		return $this;
@@ -171,9 +171,9 @@ class Product
 
 	/**
 	 * @param float|null $width
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setWidth(?float $width): Product
+	public function setWidth(?float $width): MyStockWrapProduct
 	{
 		$this->width = $width;
 		return $this;
@@ -189,9 +189,9 @@ class Product
 
 	/**
 	 * @param float|null $depth
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setDepth(?float $depth): Product
+	public function setDepth(?float $depth): MyStockWrapProduct
 	{
 		$this->depth = $depth;
 		return $this;
@@ -207,9 +207,9 @@ class Product
 
 	/**
 	 * @param float|null $volume
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setVolume(?float $volume): Product
+	public function setVolume(?float $volume): MyStockWrapProduct
 	{
 		$this->volume = $volume;
 		return $this;
@@ -225,9 +225,9 @@ class Product
 
 	/**
 	 * @param string|null $pictureUrl
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setPictureUrl(?string $pictureUrl): Product
+	public function setPictureUrl(?string $pictureUrl): MyStockWrapProduct
 	{
 		$this->pictureUrl = $pictureUrl;
 		return $this;
@@ -243,9 +243,9 @@ class Product
 
 	/**
 	 * @param int|null $expirationMandatory
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setExpirationMandatory(?int $expirationMandatory): Product
+	public function setExpirationMandatory(?int $expirationMandatory): MyStockWrapProduct
 	{
 		$this->expirationMandatory = $expirationMandatory;
 		return $this;
@@ -261,9 +261,9 @@ class Product
 
 	/**
 	 * @param int|null $inboundMandatory
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setInboundMandatory(?int $inboundMandatory): Product
+	public function setInboundMandatory(?int $inboundMandatory): MyStockWrapProduct
 	{
 		$this->inboundMandatory = $inboundMandatory;
 		return $this;
@@ -279,16 +279,16 @@ class Product
 
 	/**
 	 * @param int|null $outboundMandatory
-	 * @return Product
+	 * @return MyStockWrapProduct
 	 */
-	public function setOutboundMandatory(?int $outboundMandatory): Product
+	public function setOutboundMandatory(?int $outboundMandatory): MyStockWrapProduct
 	{
 		$this->outboundMandatory = $outboundMandatory;
 		return $this;
 	}
 
 	/**
-	 * @return ProductBarcode[]
+	 * @return MyStockWrapProductBarcode[]
 	 */
 	public function getBarcodes(): array
 	{
@@ -296,10 +296,10 @@ class Product
 	}
 
 	/**
-	 * @param ProductBarcode $barcode
-	 * @return Product
+	 * @param MyStockWrapProductBarcode $barcode
+	 * @return MyStockWrapProduct
 	 */
-	public function addBarcode(ProductBarcode $barcode): Product
+	public function addBarcode(MyStockWrapProductBarcode $barcode): MyStockWrapProduct
 	{
 		$this->barcodes[] = $barcode;
 		return $this;

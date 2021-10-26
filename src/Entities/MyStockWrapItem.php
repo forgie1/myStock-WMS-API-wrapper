@@ -10,7 +10,7 @@ namespace MyStockWmsApiWrapper\Entities;
 /**
  * Item to be shipped
  */
-class Item
+class MyStockWrapItem
 {
 
 	/** @var string Unique identifier of the product */

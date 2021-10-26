@@ -10,7 +10,7 @@ namespace MyStockWmsApiWrapper\Entities;
 /**
  * Address of the partner
  */
-class OperatingUnit
+class MyStockWrapOperatingUnit
 {
 
 	/** @var string Operating unit code from the ERP - a unique identifier that cannot be changed over time, it is used to identify partner's operating unit in the WMS. The code is displayed to warehouse operators on mobile devices and is printed in reports. */
@@ -93,9 +93,9 @@ class OperatingUnit
 
 	/**
 	 * @param string|null $street
-	 * @return OperatingUnit
+	 * @return MyStockWrapOperatingUnit
 	 */
-	public function setStreet(?string $street): OperatingUnit
+	public function setStreet(?string $street): MyStockWrapOperatingUnit
 	{
 		$this->street = $street;
 		return $this;
@@ -111,9 +111,9 @@ class OperatingUnit
 
 	/**
 	 * @param string|null $city
-	 * @return OperatingUnit
+	 * @return MyStockWrapOperatingUnit
 	 */
-	public function setCity(?string $city): OperatingUnit
+	public function setCity(?string $city): MyStockWrapOperatingUnit
 	{
 		$this->city = $city;
 		return $this;
@@ -129,9 +129,9 @@ class OperatingUnit
 
 	/**
 	 * @param string|null $zip
-	 * @return OperatingUnit
+	 * @return MyStockWrapOperatingUnit
 	 */
-	public function setZip(?string $zip): OperatingUnit
+	public function setZip(?string $zip): MyStockWrapOperatingUnit
 	{
 		$this->zip = $zip;
 		return $this;
@@ -147,9 +147,9 @@ class OperatingUnit
 
 	/**
 	 * @param string $country
-	 * @return OperatingUnit
+	 * @return MyStockWrapOperatingUnit
 	 */
-	public function setCountry(string $country): OperatingUnit
+	public function setCountry(string $country): MyStockWrapOperatingUnit
 	{
 		$this->country = $country;
 		return $this;
@@ -165,9 +165,9 @@ class OperatingUnit
 
 	/**
 	 * @param string|null $email
-	 * @return OperatingUnit
+	 * @return MyStockWrapOperatingUnit
 	 */
-	public function setEmail(?string $email): OperatingUnit
+	public function setEmail(?string $email): MyStockWrapOperatingUnit
 	{
 		$this->email = $email;
 		return $this;
@@ -183,9 +183,9 @@ class OperatingUnit
 
 	/**
 	 * @param string|null $phone
-	 * @return OperatingUnit
+	 * @return MyStockWrapOperatingUnit
 	 */
-	public function setPhone(?string $phone): OperatingUnit
+	public function setPhone(?string $phone): MyStockWrapOperatingUnit
 	{
 		$this->phone = $phone;
 		return $this;

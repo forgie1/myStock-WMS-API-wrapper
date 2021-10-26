@@ -10,7 +10,7 @@ namespace MyStockWmsApiWrapper\Entities;
 /**
  * Partner = Customer or Supplier
  */
-class Partner
+class MyStockWrapPartner
 {
 
 	/** @var string Partner code from the ERP - a unique identifier that cannot be changed over time, it is used to identify a partner in the WMS. The code is displayed to warehouse operators on mobile devices and is printed in reports. */
@@ -49,7 +49,7 @@ class Partner
 	/** @var bool Defines if the partner is active. Supported values: 0 - No, 1 - Yes. If no value is filled, the partner is inserted as active */
 	private bool $active = true;
 
-	/** @var OperatingUnit[] Optional collection of partner's operating units */
+	/** @var MyStockWrapOperatingUnit[] Optional collection of partner's operating units */
 	private array $operatingUnits;
 
 	public function __construct(string $code, int $type, string $name)
@@ -93,9 +93,9 @@ class Partner
 
 	/**
 	 * @param string|null $nameShort
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setNameShort(?string $nameShort): Partner
+	public function setNameShort(?string $nameShort): MyStockWrapPartner
 	{
 		$this->nameShort = $nameShort;
 		return $this;
@@ -111,9 +111,9 @@ class Partner
 
 	/**
 	 * @param string|null $companyRegistrationId
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setCompanyRegistrationId(?string $companyRegistrationId): Partner
+	public function setCompanyRegistrationId(?string $companyRegistrationId): MyStockWrapPartner
 	{
 		$this->companyRegistrationId = $companyRegistrationId;
 		return $this;
@@ -129,9 +129,9 @@ class Partner
 
 	/**
 	 * @param string|null $street
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setStreet(?string $street): Partner
+	public function setStreet(?string $street): MyStockWrapPartner
 	{
 		$this->street = $street;
 		return $this;
@@ -147,9 +147,9 @@ class Partner
 
 	/**
 	 * @param string|null $city
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setCity(?string $city): Partner
+	public function setCity(?string $city): MyStockWrapPartner
 	{
 		$this->city = $city;
 		return $this;
@@ -165,9 +165,9 @@ class Partner
 
 	/**
 	 * @param string|null $zip
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setZip(?string $zip): Partner
+	public function setZip(?string $zip): MyStockWrapPartner
 	{
 		$this->zip = $zip;
 		return $this;
@@ -183,9 +183,9 @@ class Partner
 
 	/**
 	 * @param string $country
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setCountry(string $country): Partner
+	public function setCountry(string $country): MyStockWrapPartner
 	{
 		$this->country = $country;
 		return $this;
@@ -201,9 +201,9 @@ class Partner
 
 	/**
 	 * @param string|null $email
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setEmail(?string $email): Partner
+	public function setEmail(?string $email): MyStockWrapPartner
 	{
 		$this->email = $email;
 		return $this;
@@ -219,9 +219,9 @@ class Partner
 
 	/**
 	 * @param string|null $phone
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setPhone(?string $phone): Partner
+	public function setPhone(?string $phone): MyStockWrapPartner
 	{
 		$this->phone = $phone;
 		return $this;
@@ -237,16 +237,16 @@ class Partner
 
 	/**
 	 * @param bool $active
-	 * @return Partner
+	 * @return MyStockWrapPartner
 	 */
-	public function setActive(bool $active): Partner
+	public function setActive(bool $active): MyStockWrapPartner
 	{
 		$this->active = $active;
 		return $this;
 	}
 
 	/**
-	 * @return OperatingUnit[]
+	 * @return MyStockWrapOperatingUnit[]
 	 */
 	public function getOperatingUnits(): array
 	{
@@ -254,10 +254,10 @@ class Partner
 	}
 
 	/**
-	 * @param OperatingUnit $operatingUnit
-	 * @return Partner
+	 * @param MyStockWrapOperatingUnit $operatingUnit
+	 * @return MyStockWrapPartner
 	 */
-	public function addOperatingUnit(OperatingUnit $operatingUnit): Partner
+	public function addOperatingUnit(MyStockWrapOperatingUnit $operatingUnit): MyStockWrapPartner
 	{
 		$this->operatingUnits[] = $operatingUnit;
 		return $this;

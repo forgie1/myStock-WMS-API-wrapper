@@ -7,14 +7,16 @@
 
 namespace MyStockWmsApiWrapper;
 
-use MyStockWmsApiWrapper\Entities\OperatingUnit;
-use MyStockWmsApiWrapper\Entities\OrderIncoming;
-use MyStockWmsApiWrapper\Entities\Partner;
-use MyStockWmsApiWrapper\Entities\Product;
-use MyStockWmsApiWrapper\Entities\ProductBarcode;
+use MyStockWmsApiWrapper\Entities\MyStockWrapOperatingUnit;
+use MyStockWmsApiWrapper\Entities\MyStockWrapOrderIncoming;
+use MyStockWmsApiWrapper\Entities\MyStockWrapPartner;
+use MyStockWmsApiWrapper\Entities\MyStockWrapProduct;
+use MyStockWmsApiWrapper\Entities\MyStockWrapProductBarcode;
+use MyStockWmsApiWrapper\Responses\Error;
 use MyStockWmsApiWrapper\Responses\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use MyStockWmsApiWrapper\Responses\ResponseId;
 use Psr\Http\Message\ResponseInterface;
 
 class MyStockClient
@@ -27,66 +29,70 @@ class MyStockClient
 
 	private string $password;
 
+	private string $endPoint;
+
 	private bool $testMode = false;
 
-	public function __construct(string $username, string $password, bool $testMode = false)
+	public function __construct(string $username, string $password, string $endpoint = null, bool $testMode = true)
 	{
 		$this->username = $username;
 		$this->password = $password;
 		$this->testMode = $testMode;
+
+		$this->endPoint = $endpoint ?: ($testMode ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT);
 	}
 
-	public function createProduct(Product $product): Response
+	public function createProduct(MyStockWrapProduct $product): Response
 	{
 		return $this->sendRequest('product', $this->productToArray($product));
 	}
 
-	public function updateProduct(Product $product, string $productId): Response
+	public function updateProduct(MyStockWrapProduct $product, string $productId): Response
 	{
-		return $this->sendRequest('product', $this->productToArray($product), 'PUT', $productId);
+		return $this->sendRequest('product', $this->productToArray($product, true), 'PUT', $productId);
 	}
 
-	public function createBarcode(ProductBarcode $barcode): Response
+	public function createBarcode(MyStockWrapProductBarcode $barcode): Response
 	{
 		$data = $this->barcodesToArray([$barcode]);
 		return $this->sendRequest('productBarcode', reset($data));
 	}
 
-	public function updateBarcode(ProductBarcode $barcode): Response
+	public function updateBarcode(MyStockWrapProductBarcode $barcode): Response
 	{
 		$data = $this->barcodesToArray([$barcode]);
 		return $this->sendRequest('productBarcode', reset($data), 'PUT', '??????');
 	}
 
-	public function createPartner(Partner $partner): Response
+	public function createPartner(MyStockWrapPartner $partner): Response
 	{
 		$data[] = '';
 
 		return $this->sendRequest('partner', $data);
 	}
 
-	public function updatePartner(Partner $partner): Response
+	public function updatePartner(MyStockWrapPartner $partner): Response
 	{
 		$data[] = '';
 
 		return $this->sendRequest('partner', $data, 'PUT', $partner->getCode());
 	}
 
-	public function createPartnerOperatingUnit(OperatingUnit $operatingUnit): Response
+	public function createPartnerOperatingUnit(MyStockWrapOperatingUnit $operatingUnit): Response
 	{
 		$data[] = '';
 
 		return $this->sendRequest('partnerOperatingUnit', $data);
 	}
 
-	public function updatePartnerOperatingUnit(OperatingUnit $operatingUnit): Response
+	public function updatePartnerOperatingUnit(MyStockWrapOperatingUnit $operatingUnit): Response
 	{
 		$data[] = '';
 
 		return $this->sendRequest('partnerOperatingUnit', $data, 'PUT', $operatingUnit->getCode());
 	}
 
-	public function createOrderIncoming(OrderIncoming $orderIncoming): Response
+	public function createOrderIncoming(MyStockWrapOrderIncoming $orderIncoming): Response
 	{
 		$data[] = '';
 
@@ -95,17 +101,16 @@ class MyStockClient
 
 	private function sendRequest(string $service, array $data, string $method = 'POST', ?string $id = null): Response
 	{
-		$url = $this->testMode ?
-			self::TEST_ENDPOINT :
-			self::PRODUCTION_ENDPOINT;
+		$url = $this->endPoint;
 		$url .= $service;
 
 		if ($id) {
-			$url .= $url . '/' . $id;
+			$url .= '/' . $id;
 		}
 
 		$options[RequestOptions::AUTH] = [$this->username, $this->password];
 		$options[RequestOptions::JSON] = $data;
+		$options[RequestOptions::HTTP_ERRORS] = false;
 
 		$client = new Client();
 		$response = $client->request($method, $url, $options);
@@ -113,16 +118,36 @@ class MyStockClient
 		return $this->parseResponse($response);
 	}
 
-	private function parseResponse(ResponseInterface $response): Response
+	private function parseResponse(ResponseInterface $rawResponse): Response
 	{
+		$response = new Response($rawResponse->getStatusCode());
 
+		$body = json_decode($rawResponse->getBody()->getContents());
+		if (isset($body->data->ids)) {
+			foreach ($body->data->ids as $id) {
+				$response->addResponseId(new ResponseId($id->id, $id->recordId, $id->type));
+			}
+		}
+		if (isset($body->errors) && count($body->errors)) {
+			foreach ($body->errors as $error) {
+				$response->addError(new Error($error->errorText, $error->errorType, $error->propertyName, $error->recordId, $error->recordType));
+			}
+		}
+
+		return $response;
 	}
 
 	// help methods
 
-	private function productToArray(Product $product): array
+	private function productToArray(MyStockWrapProduct $product, bool $update = false): array
 	{
-		$data = [
+		if (!$update) {
+			$data['productCode'] = $product->getProductCode();
+		} else {
+			$data = [];
+		}
+
+		$data += [
 			'productCode' => $product->getProductCode(),
 			'name' => $product->getName(),
 			'type' => $product->getType(),
@@ -169,7 +194,7 @@ class MyStockClient
 	}
 
 	/**
-	 * @param ProductBarcode[] $barcodes
+	 * @param MyStockWrapProductBarcode[] $barcodes
 	 * @return array
 	 */
 	private function barcodesToArray(array $barcodes): array

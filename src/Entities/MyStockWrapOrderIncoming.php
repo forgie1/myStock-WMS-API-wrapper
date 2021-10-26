@@ -10,7 +10,7 @@ namespace MyStockWmsApiWrapper\Entities;
 /**
  * Order to be created in Fulfillment
  */
-class OrderIncoming
+class MyStockWrapOrderIncoming
 {
 
 	/** Order number from the ERP system. Each order code must be unique
@@ -88,7 +88,7 @@ class OrderIncoming
 	/** @var string|null Code of pickup place from the selected carrier's codebook to which the order is to be delivered (B2C). Mandatory if shipment is to be delivered to carrier's pickup place */
 	private ?string $pickupPlaceCode;
 
-	/** @var Item[] Items to be send  */
+	/** @var MyStockWrapItem[] Items to be send  */
 	private array $items;
 
 	/** @var string|null Partner's order reference from the ERP */
@@ -153,9 +153,9 @@ class OrderIncoming
 
 	/**
 	 * @param int $priority
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setPriority(int $priority): OrderIncoming
+	public function setPriority(int $priority): MyStockWrapOrderIncoming
 	{
 		$this->priority = $priority;
 		return $this;
@@ -171,9 +171,9 @@ class OrderIncoming
 
 	/**
 	 * @param \DateTime|null $dispatchDate
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setDispatchDate(?\DateTime $dispatchDate): OrderIncoming
+	public function setDispatchDate(?\DateTime $dispatchDate): MyStockWrapOrderIncoming
 	{
 		$this->dispatchDate = $dispatchDate;
 		return $this;
@@ -189,9 +189,9 @@ class OrderIncoming
 
 	/**
 	 * @param string $deliveryMethodCode
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setDeliveryMethodCode(string $deliveryMethodCode): OrderIncoming
+	public function setDeliveryMethodCode(string $deliveryMethodCode): MyStockWrapOrderIncoming
 	{
 		$this->deliveryMethodCode = $deliveryMethodCode;
 		return $this;
@@ -207,9 +207,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $paymentMethodCode
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setPaymentMethodCode(?string $paymentMethodCode): OrderIncoming
+	public function setPaymentMethodCode(?string $paymentMethodCode): MyStockWrapOrderIncoming
 	{
 		$this->paymentMethodCode = $paymentMethodCode;
 		return $this;
@@ -225,9 +225,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $variableSymbol
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setVariableSymbol(?string $variableSymbol): OrderIncoming
+	public function setVariableSymbol(?string $variableSymbol): MyStockWrapOrderIncoming
 	{
 		$this->variableSymbol = $variableSymbol;
 		return $this;
@@ -243,9 +243,9 @@ class OrderIncoming
 
 	/**
 	 * @param float|null $cashAmount
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setCashAmount(?float $cashAmount): OrderIncoming
+	public function setCashAmount(?float $cashAmount): MyStockWrapOrderIncoming
 	{
 		$this->cashAmount = $cashAmount;
 		return $this;
@@ -261,9 +261,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $currencyCode
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setCurrencyCode(?string $currencyCode): OrderIncoming
+	public function setCurrencyCode(?string $currencyCode): MyStockWrapOrderIncoming
 	{
 		$this->currencyCode = $currencyCode;
 		return $this;
@@ -279,9 +279,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $company
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setCompany(?string $company): OrderIncoming
+	public function setCompany(?string $company): MyStockWrapOrderIncoming
 	{
 		$this->company = $company;
 		return $this;
@@ -297,9 +297,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $firstName
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setFirstName(?string $firstName): OrderIncoming
+	public function setFirstName(?string $firstName): MyStockWrapOrderIncoming
 	{
 		$this->firstName = $firstName;
 		return $this;
@@ -315,9 +315,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $lastName
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setLastName(?string $lastName): OrderIncoming
+	public function setLastName(?string $lastName): MyStockWrapOrderIncoming
 	{
 		$this->lastName = $lastName;
 		return $this;
@@ -333,9 +333,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $street
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setStreet(?string $street): OrderIncoming
+	public function setStreet(?string $street): MyStockWrapOrderIncoming
 	{
 		$this->street = $street;
 		return $this;
@@ -351,9 +351,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $city
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setCity(?string $city): OrderIncoming
+	public function setCity(?string $city): MyStockWrapOrderIncoming
 	{
 		$this->city = $city;
 		return $this;
@@ -369,9 +369,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $zip
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setZip(?string $zip): OrderIncoming
+	public function setZip(?string $zip): MyStockWrapOrderIncoming
 	{
 		$this->zip = $zip;
 		return $this;
@@ -387,9 +387,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $country
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setCountry(?string $country): OrderIncoming
+	public function setCountry(?string $country): MyStockWrapOrderIncoming
 	{
 		$this->country = $country;
 		return $this;
@@ -405,9 +405,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $email
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setEmail(?string $email): OrderIncoming
+	public function setEmail(?string $email): MyStockWrapOrderIncoming
 	{
 		$this->email = $email;
 		return $this;
@@ -423,9 +423,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $phone
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setPhone(?string $phone): OrderIncoming
+	public function setPhone(?string $phone): MyStockWrapOrderIncoming
 	{
 		$this->phone = $phone;
 		return $this;
@@ -441,16 +441,16 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $pickupPlaceCode
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setPickupPlaceCode(?string $pickupPlaceCode): OrderIncoming
+	public function setPickupPlaceCode(?string $pickupPlaceCode): MyStockWrapOrderIncoming
 	{
 		$this->pickupPlaceCode = $pickupPlaceCode;
 		return $this;
 	}
 
 	/**
-	 * @return Item[]
+	 * @return MyStockWrapItem[]
 	 */
 	public function getItems(): array
 	{
@@ -458,10 +458,10 @@ class OrderIncoming
 	}
 
 	/**
-	 * @param Item $item
-	 * @return OrderIncoming
+	 * @param MyStockWrapItem $item
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function addItem(Item $item): OrderIncoming
+	public function addItem(MyStockWrapItem $item): MyStockWrapOrderIncoming
 	{
 		$this->items[] = $item;
 		return $this;
@@ -477,9 +477,9 @@ class OrderIncoming
 
 	/**
 	 * @param string|null $itemsCustomerOrderCode
-	 * @return OrderIncoming
+	 * @return MyStockWrapOrderIncoming
 	 */
-	public function setItemsCustomerOrderCode(?string $itemsCustomerOrderCode): OrderIncoming
+	public function setItemsCustomerOrderCode(?string $itemsCustomerOrderCode): MyStockWrapOrderIncoming
 	{
 		$this->itemsCustomerOrderCode = $itemsCustomerOrderCode;
 		return $this;
