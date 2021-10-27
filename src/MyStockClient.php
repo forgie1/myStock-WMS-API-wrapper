@@ -141,13 +141,7 @@ class MyStockClient
 
 	private function productToArray(MyStockWrapProduct $product, bool $update = false): array
 	{
-		if (!$update) {
-			$data['productCode'] = $product->getProductCode();
-		} else {
-			$data = [];
-		}
-
-		$data += [
+		$data = [
 			'productCode' => $product->getProductCode(),
 			'name' => $product->getName(),
 			'type' => $product->getType(),
