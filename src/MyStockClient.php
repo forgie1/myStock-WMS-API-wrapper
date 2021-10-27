@@ -25,6 +25,8 @@ class MyStockClient
 	const TEST_ENDPOINT = 'https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/';
 	const PRODUCTION_ENDPOINT = '';
 
+	private ?MyStockLogger $logger = null;
+
 	private string $username;
 
 	private string $password;
@@ -40,6 +42,16 @@ class MyStockClient
 		$this->testMode = $testMode;
 
 		$this->endPoint = $endpoint ?: ($testMode ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT);
+	}
+
+	/**
+	 * @param MyStockLogger|null $logger
+	 * @return $this
+	 */
+	public function setLogger(?MyStockLogger $logger)
+	{
+		$this->logger = $logger;
+		return $this;
 	}
 
 	public function createProduct(MyStockWrapProduct $product): Response
@@ -112,6 +124,9 @@ class MyStockClient
 		$options[RequestOptions::JSON] = $data;
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
+		$this->logger?->log('request endpoint', $url);
+		$this->logger?->log('request data', $data);
+
 		$client = new Client();
 		$response = $client->request($method, $url, $options);
 
@@ -133,6 +148,9 @@ class MyStockClient
 				$response->addError(new Error($error->errorText, $error->errorType, $error->propertyName, $error->recordId, $error->recordType));
 			}
 		}
+
+		$this->logger?->log('response', $response);
+		$this->logger?->log('response body', $body);
 
 		return $response;
 	}
