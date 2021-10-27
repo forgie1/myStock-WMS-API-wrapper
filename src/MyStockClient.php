@@ -58,10 +58,10 @@ class MyStockClient
 		return $this->sendRequest('productBarcode', reset($data));
 	}
 
-	public function updateBarcode(MyStockWrapProductBarcode $barcode): Response
+	public function updateBarcode(MyStockWrapProductBarcode $barcode, string $barcodeId): Response
 	{
-		$data = $this->barcodesToArray([$barcode]);
-		return $this->sendRequest('productBarcode', reset($data), 'PUT', '??????');
+		$data = $this->barcodesToArray([$barcode], true);
+		return $this->sendRequest('productBarcode', reset($data), 'PUT', $barcodeId);
 	}
 
 	public function createPartner(MyStockWrapPartner $partner): Response
@@ -137,7 +137,7 @@ class MyStockClient
 		return $response;
 	}
 
-	// help methods
+	// convert to array methods
 
 	private function productToArray(MyStockWrapProduct $product, bool $update = false): array
 	{
@@ -195,19 +195,23 @@ class MyStockClient
 
 	/**
 	 * @param MyStockWrapProductBarcode[] $barcodes
+	 * @param bool $update
 	 * @return array
 	 */
-	private function barcodesToArray(array $barcodes): array
+	private function barcodesToArray(array $barcodes, bool $update = false): array
 	{
 		$items = [];
 		foreach ($barcodes as $barCode) {
-			$item['barcode'] = $barCode->getBarcode();
-			$item['default'] = $barCode->getDefault();
+			$item['productId'] = $barCode->getProductId();
+			if (!$update) {
+				$item['barcode'] = $barCode->getBarcode();
+			}
+			$item['default'] = (int)$barCode->getDefault();
 			if ($barCode->getMeasurementUnitCode()) {
 				$item['measurementUnitCode'] = $barCode->getMeasurementUnitCode();
 			}
 			if ($barCode->getActive() !== null) {
-				$item['active'] = $barCode->getActive();
+				$item['active'] = (int)$barCode->getActive();
 			}
 
 			$items[] = $item;
