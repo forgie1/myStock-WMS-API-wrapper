@@ -7,9 +7,9 @@
 
 namespace MyStockWmsApiWrapper;
 
-interface MyStockLogger
+interface MyStockLoggerI
 {
 
-	public function log(string $message, mixed $context = null);
+	public function logg(string $message, mixed $context = null);
 
 }

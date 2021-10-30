@@ -17,15 +17,17 @@ use MyStockWmsApiWrapper\Responses\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use MyStockWmsApiWrapper\Responses\ResponseId;
+use Plugins\DeliveryApi\Clients\BaseApiClient;
+use Plugins\DeliveryApi\Interface\DeliveryApiClientI;
 use Psr\Http\Message\ResponseInterface;
 
-class MyStockClient
+class MyStockClient extends BaseApiClient
 {
 
 	const TEST_ENDPOINT = 'https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/';
 	const PRODUCTION_ENDPOINT = '';
 
-	private ?MyStockLogger $logger = null;
+	private ?MyStockLoggerI $logger = null;
 
 	private string $username;
 
@@ -45,14 +47,23 @@ class MyStockClient
 	}
 
 	/**
-	 * @param MyStockLogger|null $logger
+	 * @param MyStockLoggerI|null $logger
 	 * @return $this
 	 */
-	public function setLogger(?MyStockLogger $logger)
+	public function setLogger($logger): DeliveryApiClientI
 	{
 		$this->logger = $logger;
 		return $this;
 	}
+
+	// Delivery API Methods
+
+	public function saveOrder(mixed $data): mixed
+	{
+		// todo barDump($data, 'willsave');
+	}
+
+	// Base API communication
 
 	public function createProduct(MyStockWrapProduct $product): Response
 	{
@@ -124,8 +135,8 @@ class MyStockClient
 		$options[RequestOptions::JSON] = $data;
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
-		$this->logger?->log('request endpoint', $url);
-		$this->logger?->log('request data', $data);
+		$this->logger?->logg('request endpoint', $url);
+		$this->logger?->logg('request data', $data);
 
 		$client = new Client();
 		$response = $client->request($method, $url, $options);
@@ -149,8 +160,8 @@ class MyStockClient
 			}
 		}
 
-		$this->logger?->log('response', $response);
-		$this->logger?->log('response body', $body);
+		$this->logger?->logg('response', $response);
+		$this->logger?->logg('response body', $body);
 
 		return $response;
 	}
@@ -231,5 +242,4 @@ class MyStockClient
 
 		return $items;
 	}
-
 }
