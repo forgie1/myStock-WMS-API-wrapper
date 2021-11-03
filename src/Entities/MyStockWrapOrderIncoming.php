@@ -13,6 +13,9 @@ namespace MyStockWmsApiWrapper\Entities;
 class MyStockWrapOrderIncoming
 {
 
+	const TYPE_EXTERNAL = 1;
+	const TYPE_TO_SUPPLIER = 10;
+
 	/** Order number from the ERP system. Each order code must be unique
 	 * @var string
 	 */
@@ -34,8 +37,8 @@ class MyStockWrapOrderIncoming
 	/** @var string Unique identifier of the partner - ID will be generated during the creation of partner via API */
 	private string $partnerId;
 
-	/** @var string Unique identifier of the partner's operating unit - ID will be generated during the creation of partner's operating unit via API */
-	private string $operatingUnitId;
+	/** @var string|null Unique identifier of the partner's operating unit - ID will be generated during the creation of partner's operating unit via API */
+	private ?string $operatingUnitId = null;
 
 	/** @var int Order's priority, higher number means higher priority of the inserted order. The priority can range from -999 to 999. Even though the box is not mandatory, some number (e.g. constant "0") has to be filled in */
 	private int $priority = 0;
@@ -47,54 +50,54 @@ class MyStockWrapOrderIncoming
 	private string $deliveryMethodCode;
 
 	/** @var string|null Payment method (mandatory only for COD - cash on delivery) - Code will be generated during the creation of payment method in the WMS  */
-	private ?string $paymentMethodCode;
+	private ?string $paymentMethodCode = null;
 
 	/** @var string|null Variable symbol used for distinguishing the payment (mandatory for COD, otherwise should not be filled in) */
-	private ?string $variableSymbol;
+	private ?string $variableSymbol = null;
 
 	/** @var float|null numeric (16,5) Cash amount that should be paid for the inserted order (mandatory for COD, otherwise should not be filled in (123.5) */
-	private ?float $cashAmount;
+	private ?float $cashAmount = null;
 
 	/** @var string|null string (3) Code of currency that should be used for payment (mandatory for COD, otherwise should not be filled in) (CZK) */
-	private ?string $currencyCode;
+	private ?string $currencyCode = null;
 
 	/** @var string|null Delivery address (B2C) - company name */
-	private ?string $company;
+	private ?string $company = null;
 
 	/** @var string|null Delivery address (B2C) - first name of recipient */
-	private ?string $firstName;
+	private ?string $firstName = null;
 
 	/** @var string|null Delivery address (B2C) - second name of recipient. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit. */
-	private ?string $lastName;
+	private ?string $lastName = null;
 
 	/** @var string|null Delivery address (B2C) - street. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit (Novoveská 22) */
-	private ?string $street;
+	private ?string $street = null;
 
 	/** @var string|null Delivery address (B2C) - city. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit. (Ostrava) */
-	private ?string $city;
+	private ?string $city = null;
 
 	/** @var string|null Delivery address (B2C) - ZIP code. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit (70900) */
-	private ?string $zip;
+	private ?string $zip = null;
 
 	/** @var string|null Delivery address (B2C) - country. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit. Country code should be filled according to the ISO 3166-1 standard with alpha-2 codes (e.g. "CZ" for Czech Republic). */
-	private ?string $country;
+	private ?string $country = null;
 
 	/** @var string|null Delivery address (B2C) - e-mail of recipient. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit */
-	private ?string $email;
+	private ?string $email = null;
 
 	/** @var string|null Delivery address (B2C) - phone number of recipient. Mandatory if shipment is to be delivered to different address than that of the partner's operating unit. (731123456) */
-	private ?string $phone;
+	private ?string $phone = null;
 
 	/** @var string|null Code of pickup place from the selected carrier's codebook to which the order is to be delivered (B2C). Mandatory if shipment is to be delivered to carrier's pickup place */
-	private ?string $pickupPlaceCode;
+	private ?string $pickupPlaceCode = null;
 
 	/** @var MyStockWrapItem[] Items to be send  */
 	private array $items;
 
 	/** @var string|null Partner's order reference from the ERP */
-	private ?string $itemsCustomerOrderCode;
+	private ?string $itemsCustomerOrderCode = null;
 
-	public function __construct(string $orderCode, int $type, string $warehouseCode, string $partnerId, string $operatingUnitId)
+	public function __construct(string $orderCode, int $type, string $warehouseCode, string $partnerId, ?string $operatingUnitId)
 	{
 		$this->orderCode = $orderCode;
 		$this->type = $type;
@@ -136,9 +139,9 @@ class MyStockWrapOrderIncoming
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getOperatingUnitId(): string
+	public function getOperatingUnitId(): ?string
 	{
 		return $this->operatingUnitId;
 	}

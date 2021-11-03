@@ -13,6 +13,9 @@ namespace MyStockWmsApiWrapper\Entities;
 class MyStockWrapPartner
 {
 
+	/** @var string|null Id of partner in MyStock WMS */
+	private ?string $wmsPartnerId;
+
 	/** @var string Partner code from the ERP - a unique identifier that cannot be changed over time, it is used to identify a partner in the WMS. The code is displayed to warehouse operators on mobile devices and is printed in reports. */
 	private string $code;
 
@@ -23,28 +26,28 @@ class MyStockWrapPartner
 	private string $name;
 
 	/** @var string|null string (20) Short name of the partner, if the box is not filled in, the WMS uses first 20 characters from the partner's name as the short name */
-	private ?string $nameShort;
+	private ?string $nameShort = null;
 
 	/** @var string|null Partner's registration number. The registration number must be unique - if the same registration number is already used with different partner, the entry will not be imported into the WMS. Registration number cannot be longer than 15 characters and can contain only capital letters and numbers (no spaces are permitted) (ICO12345) */
-	private ?string $companyRegistrationId;
+	private ?string $companyRegistrationId = null;
 
 	/** @var string|null (Novoveská 22) */
-	private ?string $street;
+	private ?string $street = null;
 
 	/** @var string|null (Ostrava) */
-	private ?string $city;
+	private ?string $city = null;
 
 	/** @var string|null (70900) */
-	private ?string $zip;
+	private ?string $zip = null;
 
 	/** @var string Country code should be filled according to the ISO 3166-1 standard with alpha-2 codes (e.g. "CZ" for Czech Republic) */
-	private string $country;
+	private ?string $country = null;
 
 	/** @var string|null */
-	private ?string $email;
+	private ?string $email = null;
 
 	/** @var string|null (731123456) */
-	private ?string $phone;
+	private ?string $phone = null;
 
 	/** @var bool Defines if the partner is active. Supported values: 0 - No, 1 - Yes. If no value is filled, the partner is inserted as active */
 	private bool $active = true;
@@ -57,6 +60,24 @@ class MyStockWrapPartner
 		$this->code = $code;
 		$this->type = $type;
 		$this->name = $name;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getWmsPartnerId(): ?string
+	{
+		return $this->wmsPartnerId;
+	}
+
+	/**
+	 * @param string $wmsPartnerId
+	 * @return MyStockWrapPartner
+	 */
+	public function setWmsPartnerId(string $wmsPartnerId): MyStockWrapPartner
+	{
+		$this->wmsPartnerId = $wmsPartnerId;
+		return $this;
 	}
 
 	/**
@@ -174,9 +195,9 @@ class MyStockWrapPartner
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getCountry(): string
+	public function getCountry(): ?string
 	{
 		return $this->country;
 	}

@@ -58,9 +58,13 @@ class MyStockClient extends BaseApiClient
 
 	// Delivery API Methods
 
+	/**
+	 * @param MyStockWrapOrderIncoming $data
+	 * @return Response
+	 */
 	public function saveOrder(mixed $data): mixed
 	{
-		// todo barDump($data, 'willsave');
+		return $this->createOrderIncoming($data);
 	}
 
 	// Base API communication
@@ -89,37 +93,33 @@ class MyStockClient extends BaseApiClient
 
 	public function createPartner(MyStockWrapPartner $partner): Response
 	{
-		$data[] = '';
-
+		$data = $this->partnerToArray($partner);
 		return $this->sendRequest('partner', $data);
 	}
 
 	public function updatePartner(MyStockWrapPartner $partner): Response
 	{
-		$data[] = '';
-
-		return $this->sendRequest('partner', $data, 'PUT', $partner->getCode());
+		$data = $this->partnerToArray($partner);
+		return $this->sendRequest('partner', $data, 'PUT', $partner->getWmsPartnerId());
 	}
 
 	public function createPartnerOperatingUnit(MyStockWrapOperatingUnit $operatingUnit): Response
 	{
+		throw new \Exception('Not implemented method ' . __METHOD__ . ' , implement it first.');
 		$data[] = '';
-
 		return $this->sendRequest('partnerOperatingUnit', $data);
 	}
 
 	public function updatePartnerOperatingUnit(MyStockWrapOperatingUnit $operatingUnit): Response
 	{
+		throw new \Exception('Not implemented method ' . __METHOD__ . ' , implement it first.');
 		$data[] = '';
-
 		return $this->sendRequest('partnerOperatingUnit', $data, 'PUT', $operatingUnit->getCode());
 	}
 
 	public function createOrderIncoming(MyStockWrapOrderIncoming $orderIncoming): Response
 	{
-		$data[] = '';
-
-		return $this->sendRequest('orderIncoming', $data);
+		return $this->sendRequest('orderIncoming', $this->orderIncomingToArray($orderIncoming));
 	}
 
 	private function sendRequest(string $service, array $data, string $method = 'POST', ?string $id = null): Response
@@ -167,6 +167,90 @@ class MyStockClient extends BaseApiClient
 	}
 
 	// convert to array methods
+
+	private function orderIncomingToArray(MyStockWrapOrderIncoming $orderIncoming): array
+	{
+		// basics
+		$data = [
+			'orderCode' => $orderIncoming->getOrderCode(),
+			'partnerId' => $orderIncoming->getPartnerId(),
+			'type' => $orderIncoming->getType(),
+			'warehouseCode' => $orderIncoming->getWarehouseCode(),
+			'deliveryMethodCode' => $orderIncoming->getDeliveryMethodCode(),
+		];
+
+		// services
+		if ($orderIncoming->getPaymentMethodCode()) {
+			$data['paymentMethodCode'] = $orderIncoming->getPaymentMethodCode();
+			if ($orderIncoming->getCashAmount()) {
+				$data['paymentInformation'] = [
+					'variableSymbol' => $orderIncoming->getVariableSymbol(),
+					'cashAmount' => $orderIncoming->getCashAmount(),
+					'currencyCode' => $orderIncoming->getCurrencyCode(),
+				];
+			}
+		}
+
+		// destination
+		$data['partyIdentification'] = [
+			'company' => $orderIncoming->getCompany(),
+			'firstName' => $orderIncoming->getFirstName(),
+			'lastName' => $orderIncoming->getLastName(),
+			'street' => $orderIncoming->getStreet(),
+			'city' => $orderIncoming->getCity(),
+			'zip' => $orderIncoming->getZip(),
+			'country' => $orderIncoming->getCountry(),
+			'email' => $orderIncoming->getEmail(),
+			'phone' => $orderIncoming->getPhone(),
+		];
+
+		// items
+		$items = [];
+		foreach ($orderIncoming->getItems() as $item) {
+			$item = [
+				'productId' => $item->getProductId(),
+				'amount' => ['quantity' => $item->getAmountQuantity(), 'measurementUnitCode' => $item->getAmountMeasurementUnitCode()],
+			];
+			$items[] = $item;
+		}
+		$data['items'] = $items;
+
+		return $data;
+	}
+
+	private function partnerToArray(MyStockWrapPartner $partner): array
+	{
+		$data = [
+			'code' => $partner->getCode(),
+			'type' => $partner->getType(),
+			'name' => $partner->getName(),
+		];
+
+		if ($partner->getCompanyRegistrationId()) {
+			$data['companyRegistrationId'] = $partner->getCompanyRegistrationId();
+		}
+		if ($partner->getStreet()) {
+			$data['partyIdentification']['street'] = $partner->getStreet();
+		}
+		if ($partner->getCity()) {
+			$data['partyIdentification']['city'] = $partner->getCity();
+		}
+		if ($partner->getZip()) {
+			$data['partyIdentification']['zip'] = $partner->getZip();
+		}
+		if ($partner->getCountry()) {
+			$data['partyIdentification']['country'] = $partner->getCountry();
+		}
+		if ($partner->getEmail()) {
+			$data['partyIdentification']['email'] = $partner->getEmail();
+		}
+		if ($partner->getPhone()) {
+			$data['partyIdentification']['phone'] = $partner->getPhone();
+		}
+		$data['active'] = (int)$partner->isActive();
+
+		return $data;
+	}
 
 	private function productToArray(MyStockWrapProduct $product, bool $update = false): array
 	{
@@ -242,4 +326,5 @@ class MyStockClient extends BaseApiClient
 
 		return $items;
 	}
+
 }
