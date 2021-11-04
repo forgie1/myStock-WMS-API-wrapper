@@ -17,11 +17,9 @@ use MyStockWmsApiWrapper\Responses\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use MyStockWmsApiWrapper\Responses\ResponseId;
-use Plugins\DeliveryApi\Clients\BaseApiClient;
-use Plugins\DeliveryApi\Interface\DeliveryApiClientI;
 use Psr\Http\Message\ResponseInterface;
 
-class MyStockClient extends BaseApiClient
+class MyStockClient
 {
 
 	const TEST_ENDPOINT = 'https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/';
@@ -35,13 +33,10 @@ class MyStockClient extends BaseApiClient
 
 	private string $endPoint;
 
-	private bool $testMode = false;
-
 	public function __construct(string $username, string $password, string $endpoint = null, bool $testMode = true)
 	{
 		$this->username = $username;
 		$this->password = $password;
-		$this->testMode = $testMode;
 
 		$this->endPoint = $endpoint ?: ($testMode ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT);
 	}
@@ -50,21 +45,10 @@ class MyStockClient extends BaseApiClient
 	 * @param MyStockLoggerI|null $logger
 	 * @return $this
 	 */
-	public function setLogger($logger): DeliveryApiClientI
+	public function setLogger(?MyStockLoggerI $logger)
 	{
 		$this->logger = $logger;
 		return $this;
-	}
-
-	// Delivery API Methods
-
-	/**
-	 * @param MyStockWrapOrderIncoming $data
-	 * @return Response
-	 */
-	public function saveOrder(mixed $data): mixed
-	{
-		return $this->createOrderIncoming($data);
 	}
 
 	// Base API communication
@@ -135,7 +119,7 @@ class MyStockClient extends BaseApiClient
 		$options[RequestOptions::JSON] = $data;
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
-		$this->logger?->logg('request endpoint', $url);
+		$this->logger?->logg('request endpoint', [$url]);
 		$this->logger?->logg('request data', $data);
 
 		$client = new Client();
@@ -160,8 +144,9 @@ class MyStockClient extends BaseApiClient
 			}
 		}
 
-		$this->logger?->logg('response', $response);
-		$this->logger?->logg('response body', $body);
+		$this->logger?->logg('response', [$response]);
+		$this->logger?->logg('response code', [$response->getCode()]);
+		$this->logger?->logg('response body', is_array($body) ? $body : [$body]);
 
 		return $response;
 	}
