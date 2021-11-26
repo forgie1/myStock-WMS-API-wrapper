@@ -140,7 +140,7 @@ class MyStockClient
 		}
 		if (isset($body->errors) && count($body->errors)) {
 			foreach ($body->errors as $error) {
-				$response->addError(new Error($error->errorText, $error->errorType, $error->propertyName, $error->recordId, $error->recordType));
+				$response->addError(new Error($error->errorText, $error->errorType, $error->propertyName, $error->recordId ?? '', $error->recordType ?? ''));
 			}
 		}
 
