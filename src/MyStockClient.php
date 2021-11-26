@@ -23,7 +23,7 @@ class MyStockClient
 {
 
 	const TEST_ENDPOINT = 'https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/';
-	const PRODUCTION_ENDPOINT = '';
+	const PRODUCTION_ENDPOINT = 'https://authentica.wmsint.mystock.cz:9341/myStockInterfaceAuthentica/V1/';
 
 	private ?MyStockLoggerI $logger = null;
 
@@ -33,12 +33,12 @@ class MyStockClient
 
 	private string $endPoint;
 
-	public function __construct(string $username, string $password, string $endpoint = null, bool $testMode = true)
+	public function __construct(string $username, string $password, bool $testMode = true)
 	{
 		$this->username = $username;
 		$this->password = $password;
 
-		$this->endPoint = $endpoint ?: ($testMode ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT);
+		$this->endPoint = $testMode ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT;
 	}
 
 	/**
