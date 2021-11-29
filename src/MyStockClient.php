@@ -188,6 +188,9 @@ class MyStockClient
 			'email' => $orderIncoming->getEmail(),
 			'phone' => $orderIncoming->getPhone(),
 		];
+		if ($orderIncoming->getPickupPlaceCode()) {
+			$data['pickupPlaceCode'] = $orderIncoming->getPickupPlaceCode();
+		}
 
 		// items
 		$items = [];
