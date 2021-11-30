@@ -189,7 +189,7 @@ class MyStockClient
 			'phone' => $orderIncoming->getPhone(),
 		];
 		if ($orderIncoming->getPickupPlaceCode()) {
-			$data['pickupPlaceCode'] = $orderIncoming->getPickupPlaceCode();
+			$data['partyIdentification']['pickupPlaceCode'] = $orderIncoming->getPickupPlaceCode();
 		}
 
 		// items
