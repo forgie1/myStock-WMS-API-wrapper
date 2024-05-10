@@ -117,10 +117,10 @@ class MyStockClient
 	private function sendRequest(string $service, array $data, string $method = 'POST', ?string $id = null): Response
 	{
 		$url = $this->endPoint;
-		$url .= $service;
+		$url .= $service . '/';
 
 		if ($id) {
-			$url .= '/' . $id;
+			$url .= $id;
 		}
 
 		$options[RequestOptions::AUTH] = [$this->username, $this->password];
@@ -128,6 +128,7 @@ class MyStockClient
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
 		$this->logger?->logg('request endpoint', [$url]);
+		$this->logger?->logg('request method', [$method]);
 		$this->logger?->logg('request data', $data);
 
 		$client = new Client();
