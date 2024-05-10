@@ -22,23 +22,31 @@ use Psr\Http\Message\ResponseInterface;
 class MyStockClient
 {
 
-	const TEST_ENDPOINT = 'https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/';
-	const PRODUCTION_ENDPOINT = 'https://authentica.wmsint.mystock.cz:9341/myStockInterfaceAuthentica/V1/';
-
 	private ?MyStockLoggerI $logger = null;
 
 	private string $username;
 
 	private string $password;
 
+	/**
+	 * @var string
+	 * examples:
+	 * https://authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1
+	 * authenticatest.wmsint.mystock.cz:9351/myStockInterfaceAuthenticaTest/V1/
+	 * https://wmsinttest.dextrum.cz:9351/myStockInterfaceDextrumTest
+	 * wmsinttest.dextrum.cz:9351/myStockInterfaceDextrumTest/
+	 */
 	private string $endPoint;
 
-	public function __construct(string $username, string $password, bool $testMode = true)
+	public function __construct(string $username, string $password, string $endpoint)
 	{
 		$this->username = $username;
 		$this->password = $password;
 
-		$this->endPoint = $testMode ? self::TEST_ENDPOINT : self::PRODUCTION_ENDPOINT;
+		$this->endPoint = str_contains($endpoint, 'https://') ? $endpoint : 'https://' . $endpoint;
+		if (!str_ends_with($endpoint, '/')) {
+			$this->endPoint .= '/';
+		}
 	}
 
 	/**
