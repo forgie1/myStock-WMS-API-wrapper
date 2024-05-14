@@ -22,6 +22,8 @@ use Psr\Http\Message\ResponseInterface;
 class MyStockClient
 {
 
+	const CURRENT_VERSION = 'V1';
+
 	private ?MyStockLoggerI $logger = null;
 
 	private string $username;
@@ -44,7 +46,11 @@ class MyStockClient
 		$this->password = $password;
 
 		$this->endPoint = str_contains($endpoint, 'https://') ? $endpoint : 'https://' . $endpoint;
-		if (!str_ends_with($endpoint, '/')) {
+		if (str_ends_with($endpoint, self::CURRENT_VERSION)) {
+			$this->endPoint = substr($this->endPoint, 0, -2);
+		} elseif (str_ends_with($endpoint, self::CURRENT_VERSION . '/')) {
+			$this->endPoint = substr($this->endPoint, 0, -3);
+		} elseif (!str_ends_with($endpoint, '/')) {
 			$this->endPoint .= '/';
 		}
 	}
@@ -117,7 +123,7 @@ class MyStockClient
 	private function sendRequest(string $service, array $data, string $method = 'POST', ?string $id = null): Response
 	{
 		$url = $this->endPoint;
-		$url .= $service . '/';
+		$url .= self::CURRENT_VERSION . '/' . $service . '/';
 
 		if ($id) {
 			$url .= $id;
