@@ -133,6 +133,7 @@ class MyStockClient
 		$options[RequestOptions::JSON] = $data;
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
+		$this->logger?->logg('request auth', ['userName' => $this->username, 'userPassword' => $this->password]);
 		$this->logger?->logg('request endpoint', [$url]);
 		$this->logger?->logg('request method', [$method]);
 		$this->logger?->logg('request data', $data);
