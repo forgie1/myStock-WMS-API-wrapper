@@ -212,6 +212,7 @@ class MyStockClient
 		foreach ($orderIncoming->getItems() as $item) {
 			$item = [
 				'productId' => $item->getProductId(),
+				'itemCode' => $item->getItemCode(),
 				'amount' => ['quantity' => $item->getAmountQuantity(), 'measurementUnitCode' => $item->getAmountMeasurementUnitCode()],
 			];
 			$items[] = $item;
