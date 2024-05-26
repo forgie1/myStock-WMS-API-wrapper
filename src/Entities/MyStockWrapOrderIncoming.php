@@ -92,7 +92,7 @@ class MyStockWrapOrderIncoming
 	private ?string $pickupPlaceCode = null;
 
 	/** @var MyStockWrapItem[] Items to be send  */
-	private array $items;
+	private array $items = [];
 
 	/** @var string|null Partner's order reference from the ERP */
 	private ?string $itemsCustomerOrderCode = null;

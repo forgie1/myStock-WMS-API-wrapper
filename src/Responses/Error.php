@@ -23,8 +23,8 @@ class Error
 
 	private string $errorText;
 
-	/** @var int  Error type (see self::ERROR_TYPES) */
-	private int $errorType;
+	/** @var ?int  Error type (see self::ERROR_TYPES) */
+	private ?int $errorType;
 
 	/** @var string|null Optional name of invalid property */
 	private ?string $propertyName;
@@ -35,10 +35,10 @@ class Error
 	/** @var string Type of faulted record (partner) */
 	private string $recordType;
 
-	public function __construct(string $errorText, int|string $errorType, ?string $propertyName, string $recordId, string $recordType)
+	public function __construct(string $errorText, int|string|null $errorType, ?string $propertyName, string $recordId, string $recordType)
 	{
 		$this->errorText = $errorText;
-		$this->errorType = (int)$errorType;
+		$this->errorType = isset($errorType) ? (int)$errorType : null;
 		$this->propertyName = $propertyName;
 		$this->recordId = $recordId;
 		$this->recordType = $recordType;
@@ -52,7 +52,7 @@ class Error
 		return $this->errorText;
 	}
 
-	public function getErrorCode(): int
+	public function getErrorCode(): ?int
 	{
 		return $this->errorType;
 	}
