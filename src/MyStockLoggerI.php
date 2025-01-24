@@ -10,6 +10,6 @@ namespace MyStockWmsApiWrapper;
 interface MyStockLoggerI
 {
 
-	public function logg(string $message, array $context = null);
+	public function logg(string $message, ?array $context = null);
 
 }
